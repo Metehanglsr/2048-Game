@@ -27,11 +27,6 @@ public class Board {
     {
         boolean control;
         Random rand = new Random();
-        if(isGameOver())
-        {
-            System.out.println("The game is over.");
-            return;
-        }
         while(true)
         {
             int randomRow = rand.nextInt(4);
@@ -60,7 +55,7 @@ public class Board {
                 break;
         }
     }
-    private boolean isGameOver()
+    public boolean isGameOver()
     {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
@@ -71,5 +66,25 @@ public class Board {
             }
         }
         return true;
+    }
+    public void moveUp()
+    {
+        generateNew();
+        display();
+    }
+    public void moveDown()
+    {
+        generateNew();
+        display();
+    }
+    public void moveLeft()
+    {
+        generateNew();
+        display();
+    }
+    public void moveRight()
+    {
+        generateNew();
+        display();
     }
 }
