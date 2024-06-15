@@ -6,6 +6,6 @@ public class Cell {
     }
     public Cell()
     {
-        this.number = 2;
+        this.number = 0;
     }
 }
