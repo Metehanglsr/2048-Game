@@ -1,90 +1,224 @@
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Board {
-    private final int rows=4;
-    private final int cols=4;
+    private final int rows = 4;
+    private final int cols = 4;
     private final Cell[][] cells;
-    public Board()
-    {
-        cells= new Cell[rows][cols];
+
+    public Board() {
+        cells = new Cell[rows][cols];
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 cells[i][j] = new Cell();
             }
         }
     }
-    public void display()
-    {
+
+    public void display() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                System.out.print(cells[i][j].number +"  ");
+                System.out.print(cells[i][j].number + "  ");
             }
             System.out.println("");
             System.out.println("");
         }
     }
-    public void generateNew()
-    {
+
+    public void generateNew() {
         boolean control;
         Random rand = new Random();
-        while(true)
-        {
+        while (true) {
             int randomRow = rand.nextInt(4);
             int randomCol = rand.nextInt(4);
             control = false;
-            for (int i = 0; i < rows; i++) 
-            {
+            for (int i = 0; i < rows; i++) {
                 for (int j = 0; j < cols; j++) {
-                    if(randomRow == i && randomCol == j)
-                    {
-                        if(this.cells[i][j].number == 0)
-                        {
+                    if (randomRow == i && randomCol == j) {
+                        if (this.cells[i][j].number == 0) {
                             this.cells[i][j].number = 2;
-                        }
-                        else
-                        {
+                        } else {
                             control = true;
                             break;
                         }
                     }
                 }
-                if(control == true)
+                if (control == true)
                     break;
             }
-            if(control == false)
+            if (control == false)
                 break;
         }
     }
-    public boolean isGameOver()
-    {
+
+    public boolean isGameOver() {
+        return false;//
+    }
+    public boolean isBoardFull() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if(this.cells[i][j].number == 0)
-                {
+                if (this.cells[i][j].number == 0) { // ve birbirine eşit olan yanyana sayı yoksa
                     return false;
                 }
             }
         }
         return true;
     }
-    public void moveUp()
-    {
-        generateNew();
-        display();
+
+    public void moveUp() {
+        List<Cell> list = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            list.clear();
+            for (int j = 0; j < cols; j++) {
+                list.add(cells[j][i]);
+            }
+            for (int k = 0; k < list.size(); k++) {
+                if (k + 1 < list.size()) {
+                    if (list.get(k).number == 0) {
+                        list.remove(k);
+                        k--;
+                        continue;
+                    }
+                    if (list.get(k + 1).number == 0) {
+                        list.remove(k + 1);
+                        k--;
+                        continue;
+                    }
+                    if (list.get(k).number == list.get(k + 1).number) {
+                        list.get(k).number *= 2;
+                        list.remove(k + 1);
+                    }
+                }
+            }
+            while (true) {
+                if (list.size() != 4) {
+                    list.add(new Cell());
+                } else {
+                    break;
+                }
+            }
+            for (int d = 0; d < list.size(); d++) {
+                cells[d][i].number = list.get(d).number;
+            }
+        }
     }
-    public void moveDown()
-    {
-        generateNew();
-        display();
+
+    public void moveDown() {
+        List<Cell> list = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            list.clear();
+            for (int j = 0; j < cols; j++) {
+                list.add(cells[j][i]);
+            }
+            list = list.reversed();
+            for (int k = 0; k < list.size(); k++) {
+                if (k + 1 < list.size()) {
+                    if (list.get(k).number == 0) {
+                        list.remove(k);
+                        k--;
+                        continue;
+                    }
+                    if (list.get(k + 1).number == 0) {
+                        list.remove(k + 1);
+                        k--;
+                        continue;
+                    }
+                    if (list.get(k).number == list.get(k + 1).number) {
+                        list.get(k).number *= 2;
+                        list.remove(k + 1);
+                    }
+                }
+            }
+            while (true) {
+                if (list.size() != rows) {
+                    list.add(new Cell());
+                } else {
+                    break;
+                }
+            }
+            list = list.reversed();
+            for (int d = 0; d < list.size(); d++) {
+                cells[d][i].number = list.get(d).number;
+            }
+        }
     }
-    public void moveLeft()
-    {
-        generateNew();
-        display();
+
+    public void moveLeft() {
+        List<Cell> list = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            list.clear();
+            for (int j = 0; j < cols; j++) {
+                list.add(cells[i][j]);
+            }
+            for (int k = 0; k < list.size(); k++) {
+                if (k + 1 < list.size()) {
+                    if (list.get(k).number == 0) {
+                        list.remove(k);
+                        k--;
+                        continue;
+                    }
+                    if (list.get(k + 1).number == 0) {
+                        list.remove(k + 1);
+                        k--;
+                        continue;
+                    }
+                    if (list.get(k).number == list.get(k + 1).number) {
+                        list.get(k).number *= 2;
+                        list.remove(k + 1);
+                    }
+                }
+            }
+            while (true) {
+                if (list.size() != 4) {
+                    list.add(new Cell());
+                } else {
+                    break;
+                }
+            }
+            for (int d = 0; d < list.size(); d++) {
+                cells[i][d].number = list.get(d).number;
+            }
+        }
     }
-    public void moveRight()
-    {
-        generateNew();
-        display();
+
+    public void moveRight() {
+        List<Cell> list = new ArrayList<>();
+        for (int i = 0; i < rows; i++) {
+            list.clear();
+            for (int j = 0; j < cols; j++) {
+                list.add(cells[i][j]);
+            }
+            list = list.reversed();
+            for (int k = 0; k < list.size(); k++) {
+                if (k + 1 < list.size()) {
+                    if (list.get(k).number == 0) {
+                        list.remove(k);
+                        k--;
+                        continue;
+                    }
+                    if (list.get(k + 1).number == 0) {
+                        list.remove(k + 1);
+                        k--;
+                        continue;
+                    }
+                    if (list.get(k).number == list.get(k + 1).number) {
+                        list.get(k).number *= 2;
+                        list.remove(k + 1);
+                    }
+                }
+            }
+            while (true) {
+                if (list.size() != 4) {
+                    list.add(new Cell());
+                } else {
+                    break;
+                }
+            }
+            list = list.reversed();
+            for (int d = 0; d < list.size(); d++) {
+                cells[i][d].number = list.get(d).number;
+            }
+        }
     }
 }
