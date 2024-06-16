@@ -14,31 +14,39 @@ public class Game {
         this.b1.generateNew();
         this.b1.display();
         try (Scanner in = new Scanner(System.in)) {
-            while (!this.b1.isBoardFull()) {
+            while (!this.b1.isGameOver()) {
                 String input = in.nextLine();
                 if (input.equalsIgnoreCase("W")) {
                     clear();
                     this.b1.moveUp();
-                    if (!this.b1.isBoardFull())
+                    if (!this.b1.isBoardFull() && this.b1.situation == true) {
                         this.b1.generateNew();
+                        this.b1.situation = false;
+                    }
                     this.b1.display();
                 } else if (input.equalsIgnoreCase("S")) {
                     clear();
                     this.b1.moveDown();
-                    if (!this.b1.isBoardFull())
+                    if (!this.b1.isBoardFull() && this.b1.situation == true) {
                         this.b1.generateNew();
+                        this.b1.situation = false;
+                    }
                     this.b1.display();
                 } else if (input.equalsIgnoreCase("A")) {
                     clear();
                     this.b1.moveLeft();
-                    if (!this.b1.isBoardFull())
+                    if (!this.b1.isBoardFull() && this.b1.situation == true) {
                         this.b1.generateNew();
+                        this.b1.situation = false;
+                    }
                     this.b1.display();
                 } else if (input.equalsIgnoreCase("D")) {
                     clear();
                     this.b1.moveRight();
-                    if (!this.b1.isBoardFull())
+                    if (!this.b1.isBoardFull() && this.b1.situation == true) {
                         this.b1.generateNew();
+                        this.b1.situation = false;
+                    }
                     this.b1.display();
                 }
             }

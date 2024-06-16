@@ -6,6 +6,7 @@ public class Board {
     private final int rows = 4;
     private final int cols = 4;
     private final Cell[][] cells;
+    public boolean situation = false;
 
     public Board() {
         cells = new Cell[rows][cols];
@@ -17,9 +18,11 @@ public class Board {
     }
 
     public void display() {
+        System.out.println("\n \n \n ");
         for (int i = 0; i < rows; i++) {
+            System.out.print("\t \t \t \t \t \t \t \t \t \t \t \t");
             for (int j = 0; j < cols; j++) {
-                System.out.print(cells[i][j].number + "  ");
+                System.out.print(cells[i][j].number + "\t  ");
             }
             System.out.println("");
             System.out.println("");
@@ -53,17 +56,43 @@ public class Board {
     }
 
     public boolean isGameOver() {
-        return false;//
+        if (isBoardFull() && !isEqualNumber()) {
+            return true;
+        }
+        return false;
     }
+
     public boolean isBoardFull() {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (this.cells[i][j].number == 0) { // ve birbirine eşit olan yanyana sayı yoksa
+                if (this.cells[i][j].number == 0) {
                     return false;
                 }
             }
         }
         return true;
+    }
+
+    public boolean isEqualNumber() {
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (j + 1 < cols) {
+                    if (cells[i][j].number == cells[i][j + 1].number) {
+                        return true;
+                    }
+                }
+            }
+        }
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (i + 1 < cols) {
+                    if (cells[j][i].number == cells[j][i + 1].number) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
     }
 
     public void moveUp() {
@@ -99,7 +128,10 @@ public class Board {
                 }
             }
             for (int d = 0; d < list.size(); d++) {
-                cells[d][i].number = list.get(d).number;
+                if (cells[d][i] != list.get(d)) {
+                    situation = true;
+                }
+                cells[d][i] = list.get(d);
             }
         }
     }
@@ -139,7 +171,10 @@ public class Board {
             }
             list = list.reversed();
             for (int d = 0; d < list.size(); d++) {
-                cells[d][i].number = list.get(d).number;
+                if (cells[d][i] != list.get(d)) {
+                    situation = true;
+                }
+                cells[d][i] = list.get(d);
             }
         }
     }
@@ -177,7 +212,10 @@ public class Board {
                 }
             }
             for (int d = 0; d < list.size(); d++) {
-                cells[i][d].number = list.get(d).number;
+                if (cells[d][i] != list.get(d)) {
+                    situation = true;
+                }
+                cells[i][d] = list.get(d);
             }
         }
     }
@@ -217,7 +255,10 @@ public class Board {
             }
             list = list.reversed();
             for (int d = 0; d < list.size(); d++) {
-                cells[i][d].number = list.get(d).number;
+                if (cells[d][i] != list.get(d)) {
+                    situation = true;
+                }
+                cells[i][d] = list.get(d);
             }
         }
     }
