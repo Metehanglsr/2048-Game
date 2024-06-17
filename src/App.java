@@ -20,7 +20,7 @@ public class App {
             default:
                 setColor("07");
                 break;
-        } // hareket yokken 2 uretme ve oyun bitisini kontrol et
+        }
         Game game = new Game();
         game.gameStart();
         System.out.println("The game is over.");

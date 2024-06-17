@@ -20,7 +20,7 @@ public class Board {
     public void display() {
         System.out.println("\n \n \n ");
         for (int i = 0; i < rows; i++) {
-            System.out.print("\t \t \t \t \t \t \t \t \t \t \t \t");
+            System.out.print("\t \t \t \t \t \t \t");
             for (int j = 0; j < cols; j++) {
                 System.out.print(cells[i][j].number + "\t  ");
             }
@@ -81,12 +81,9 @@ public class Board {
                         return true;
                     }
                 }
-            }
-        }
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                if (i + 1 < cols) {
-                    if (cells[j][i].number == cells[j][i + 1].number) {
+                // Alt alta olan hücreleri kontrol et
+                if (i + 1 < rows) {
+                    if (cells[i][j].number == cells[i + 1][j].number) {
                         return true;
                     }
                 }
@@ -128,7 +125,7 @@ public class Board {
                 }
             }
             for (int d = 0; d < list.size(); d++) {
-                if (cells[d][i] != list.get(d)) {
+                if (cells[d][i].number != list.get(d).number) {
                     situation = true;
                 }
                 cells[d][i] = list.get(d);
@@ -171,11 +168,12 @@ public class Board {
             }
             list = list.reversed();
             for (int d = 0; d < list.size(); d++) {
-                if (cells[d][i] != list.get(d)) {
+                if (cells[d][i].number != list.get(d).number) {
                     situation = true;
                 }
                 cells[d][i] = list.get(d);
             }
+
         }
     }
 
@@ -212,7 +210,7 @@ public class Board {
                 }
             }
             for (int d = 0; d < list.size(); d++) {
-                if (cells[d][i] != list.get(d)) {
+                if (cells[i][d].number != list.get(d).number) {
                     situation = true;
                 }
                 cells[i][d] = list.get(d);
@@ -255,7 +253,7 @@ public class Board {
             }
             list = list.reversed();
             for (int d = 0; d < list.size(); d++) {
-                if (cells[d][i] != list.get(d)) {
+                if (cells[i][d].number != list.get(d).number) {
                     situation = true;
                 }
                 cells[i][d] = list.get(d);
